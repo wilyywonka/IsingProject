@@ -6,7 +6,7 @@ program SolveMonteCarlo
 
 
   integer :: iteratorT, iteratorEvals, iteratorEnsembles
-  integer :: EvalsPerEnsemble = 100, NumEnsembles = 100, NumT = 2
+  integer :: EvalsPerEnsemble = 1000, NumEnsembles = 1000, NumT = 2
 
   integer, dimension(2) :: CurrentSpinsXY
 
@@ -17,7 +17,7 @@ program SolveMonteCarlo
 
   integer :: SpinSizeX = 10, SpinSizeY = 10
   
-  real :: MaximumTemp = 50, JSet = -10
+  real :: MaximumTemp = 50, JSet = 2
 
 
   call Initialize(Parameters,NumT,SpinSizeX,SpinSizeY,MaximumTemp,JSet)
@@ -44,7 +44,7 @@ program SolveMonteCarlo
         ! Check if this
        ! print*,ExponentialChance 
         if (randomEval<ExponentialChance) then
-          print*, randomEval, ExponentialChance, Parameters%OldEnergy, Parameters%NewEnergy
+          !print*, randomEval, ExponentialChance, Parameters%OldEnergy, Parameters%NewEnergy
           call spinFlip(Parameters, CurrentSpinsXY(1), CurrentSpinsXY(2))
       
         end if
@@ -56,7 +56,7 @@ program SolveMonteCarlo
     ! Increment IntT from 0 to NumT-1
     call incrementT(Parameters)
     ! Scramble the spins so as to start with a random
-    print*, Parameters%SpinArray
+!    print*, Parameters%SpinArray
     !call spinScrambler(Parameters)
   end do
 

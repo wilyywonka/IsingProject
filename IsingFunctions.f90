@@ -51,11 +51,11 @@ module IsingParameters
 
     Parameters%EnsembleCounter = 1
 
-    Parameters%J = JSet
+    Parameters%J = -JSet
 
     Parameters%TotalMagnetization = 0
 
-    Parameters%kB = 0.1
+    Parameters%kB = 1
     
     ! ---
 
