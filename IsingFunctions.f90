@@ -179,7 +179,7 @@ module IsingFunctions
         Parameters%TotalMagnetization = Parameters%TotalMagnetization + Parameters%SpinArray(IteratorSpinX,IteratorSpinY)
       end do
     end do
-    print*, Parameters%TotalMagnetization, "should be in range", Parameters%numSpinX*Parameters%numSpinY
+   ! print*, Parameters%TotalMagnetization, "should be in range", Parameters%numSpinX*Parameters%numSpinY
     Parameters%TotalMagnetization = Parameters%TotalMagnetization/(Parameters%numSpinX*Parameters%numSpinY)
 !    print*, Parameters%TotalMagnetization
 

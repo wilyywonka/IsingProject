@@ -6,7 +6,7 @@ FOPTIM=-O3
 
 
 APP=IsingProgram
-SRC=$(APP).f90
+SRC=$(APP).f90	
 
 MODULEAPP=IsingFunctions
 MODULESRC=$(MODULEAPP).f90

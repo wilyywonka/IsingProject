@@ -17,7 +17,7 @@ program SolveMonteCarlo
 
   integer :: SpinSizeX = 10, SpinSizeY = 10
   
-  real :: MaximumTemp = 50, JSet = 2
+  real :: MaximumTemp = 0.001, JSet = 2
 
 
   call Initialize(Parameters,NumT,SpinSizeX,SpinSizeY,MaximumTemp,JSet)
@@ -44,13 +44,15 @@ program SolveMonteCarlo
         ! Check if this
        ! print*,ExponentialChance 
         if (randomEval<ExponentialChance) then
-          !print*, randomEval, ExponentialChance, Parameters%OldEnergy, Parameters%NewEnergy
+
+          print*, randomEval, ExponentialChance, Parameters%OldEnergy, Parameters%NewEnergy, Parameters%T*Parameters%kB
           call spinFlip(Parameters, CurrentSpinsXY(1), CurrentSpinsXY(2))
       
         end if
       
       end do
       call AddMeasurement(Parameters)
+      !print*, Parameters%OldEnergy
     end do
 
     ! Increment IntT from 0 to NumT-1
