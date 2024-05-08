@@ -168,11 +168,13 @@ rand([-1,1],10,10)
 
 L = 200
 Results = zeros(L)
-TempList = LinRange(0.0001,420,L)
-N,M,NIter = 70,70,20
+TempList = LinRange(0.0001,550,L)
+N,M,NIter = 20,20,200
+iterationsNum = 500000
+eqpointNum = 250000
 Threads.@threads for i in 1:L
     for j in 1:NIter
-        reslat,sval = Isingsimulation(TempList[i],N,M,iterations = 2000000,eqPoint = 1000000)
+        reslat,sval = Isingsimulation(TempList[i],N,M,iterations = iterationsNum,eqPoint = eqpointNum)
         Results[i] += sval/NIter
         println(sval)
     end
