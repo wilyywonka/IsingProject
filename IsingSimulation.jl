@@ -167,24 +167,23 @@ end
 rand([-1,1],10,10)
 
 L = 200
-
 Results = zeros(L)
-TempList = LinRange(0.0001,120,L)
-#reslat,sval = Isingsimulation(Results[1],1,20,20,iterations = 1000000,eqPoint = 700000)
-
-N,M = 70,70
-
-"""
+TempList = LinRange(0.0001,420,L)
+N,M,NIter = 70,70,20
 Threads.@threads for i in 1:L
-    reslat,sval = Isingsimulation(TempList[i],N,M,iterations = 500000,eqPoint = 450000)
-    Results[i] = sval
+    for j in 1:NIter
+        reslat,sval = Isingsimulation(TempList[i],N,M,iterations = 2000000,eqPoint = 1000000)
+        Results[i] += sval/NIter
+        println(sval)
+    end
 end
-"""
 
-reslat,sval = Isingsimulation(TempList[1],N,M,iterations = 5000,eqPoint = 4500)
+plot(TempList,Results)
+
+reslat,sval = Isingsimulation(TempList[200],N,M,iterations = 5000000,eqPoint = 4500000)
 
 #plot(Results)
-
+println(sval)
 heatmap(reslat)
 
 
