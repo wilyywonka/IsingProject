@@ -161,11 +161,12 @@ end
 
 
 #Lattice[2,3] = -1
-#sumResult, TestLattice = H(Lattice,LatticeTest,100,100)
+#sumResult, TestLattice = H(Lattice,LatticeTest,100,100)S
 #println(sumResult)
 
 rand([-1,1],10,10)
 
+L = 50
 L = 50
 Results = zeros(L)
 TempList = LinRange(0.0001,550,L)
