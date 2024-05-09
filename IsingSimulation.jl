@@ -6,7 +6,7 @@ function Isingsimulation(T, N, M; iterations=10000, eqPoint=5000)
     β::Float64 = J/k
     μ::Float64 = -β/T
    
-    println(β)
+    println(1/μ)
 
     Lattice = Spinscrambler(N,M)
 
@@ -166,13 +166,13 @@ end
 
 rand([-1,1],10,10)
 
-L = 200
+L = 50
 Results = zeros(L)
 TempList = LinRange(0.0001,550,L)
-N,M,NIter = 20,20,200
-iterationsNum = 500000
-eqpointNum = 250000
-Threads.@threads for i in 1:L
+N,M,NIter = 40,40,10
+iterationsNum = 1000000
+eqpointNum = 500000
+@time Threads.@threads for i in 1:L
     for j in 1:NIter
         reslat,sval = Isingsimulation(TempList[i],N,M,iterations = iterationsNum,eqPoint = eqpointNum)
         Results[i] += sval/NIter

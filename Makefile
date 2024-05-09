@@ -32,12 +32,12 @@ FFLAGS+=$(FOPTIM)
 # 	$(FC) $(FFLAGSDEBUG) -I/$(INC1) -L/$(LIB) -o $(APP) $(SRC) $(MODULEAPP).o -lhdf5 -lhdf5_fortran -fopenmp
 
 build: $(OBJ)
-	$(FC) $(FFLAGS) -I/$(INC1) -c $(MODULESRC) -fopenmp
-	$(FC) $(FFLAGS) -I/$(INC1) -o $(APP) $(SRC) $(MODULEAPP).o
+	$(FC) $(FFLAGS) -c $(MODULESRC) -fopenmp
+	$(FC) $(FFLAGS) -o $(APP) $(SRC) $(MODULEAPP).o
 
 debug: $(OBJ)
-	$(FC) $(FFLAGSDEBUG) -I/$(INC1) -c $(MODULESRC) -fopenmp
-	$(FC) $(FFLAGSDEBUG) -I/$(INC1) -o $(APP) $(SRC) $(MODULEAPP).o
+	$(FC) $(FFLAGSDEBUG) -c $(MODULESRC) -fopenmp
+	$(FC) $(FFLAGSDEBUG) -o $(APP) $(SRC) $(MODULEAPP).o
 
 
 run:
