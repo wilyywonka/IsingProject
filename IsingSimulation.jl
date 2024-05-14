@@ -1,12 +1,15 @@
 using Plots
 
-function Isingsimulation(T, N, M; iterations=10000, eqPoint=5000)
+function Isingsimulation(T, N, M, highT; iterations=10000, preeqPoint=2000,  eqPoint=5000)
     k::Float64 = 1.381e-23
     J::Float64 = 1.60218e-21
     β::Float64 = J/k
-    μ::Float64 = -β/T
-   
-    println(1/μ)
+    μ::Float64 = 0
+
+
+
+
+    println(β)
 
     Lattice = Spinscrambler(N,M)
 
@@ -14,16 +17,22 @@ function Isingsimulation(T, N, M; iterations=10000, eqPoint=5000)
     NewH::Float64 = 0
 
     SValue::Float64 = 0
-    Sdivisor = 1/(iterations-eqPoint)
+    Sdivisor = 1/(iterations)
 
-    for iterator in 1:iterations
+    for iterator in 1:(iterations+eqPoint+preeqPoint)
+        if iterator == preeqPoint
+            μ = -β/T
+        elseif iterator < preeqPoint
+            additionalT = highT*(preeqPoint-iterator)/preeqPoint
+            μ = -β/(T+additionalT)
+            #println("In iteration", iterator, "mu in now ", μ)
+        end
         Latticesite = LatticePoint(N,M)
 
         CurrentH = H(Lattice,N,M,Latticesite[1],Latticesite[2])
 
         Lattice = Spinflipper(Lattice, Latticesite[1], Latticesite[2])
 
-#        NewH = HTotal(Lattice,N,M)
         NewH = H(Lattice,N,M,Latticesite[1],Latticesite[2])
 
         if NewH < CurrentH
@@ -36,7 +45,7 @@ function Isingsimulation(T, N, M; iterations=10000, eqPoint=5000)
             #Flipping back
             Lattice = Spinflipper(Lattice, Latticesite[1], Latticesite[2])            
         end
-        if iterator > eqPoint
+        if iterator > eqPoint+preeqPoint
             SValue += S(Lattice,N,M)*Sdivisor
         end
     end
@@ -166,16 +175,18 @@ end
 
 rand([-1,1],10,10)
 
-L = 50
+#reslat,sval = Isingsimulation(TempList[2],10,10,TempList[40],iterations = iterationsNum, preeqPoint=preeqpointNum,eqPoint = eqpointNum)
+
 L = 50
 Results = zeros(L)
 TempList = LinRange(0.0001,550,L)
-N,M,NIter = 40,40,10
-iterationsNum = 1000000
-eqpointNum = 500000
+N,M,NIter = 5,5,20
+iterationsNum = 100000
+eqpointNum =    60000
+preeqpointNum = 50000
 @time Threads.@threads for i in 1:L
     for j in 1:NIter
-        reslat,sval = Isingsimulation(TempList[i],N,M,iterations = iterationsNum,eqPoint = eqpointNum)
+        reslat,sval = Isingsimulation(TempList[i],N,M,TempList[40],iterations = iterationsNum, preeqPoint=preeqpointNum,eqPoint = eqpointNum)
         Results[i] += sval/NIter
         println(sval)
     end
@@ -183,10 +194,11 @@ end
 
 plot(TempList,Results)
 
-reslat,sval = Isingsimulation(TempList[200],N,M,iterations = 5000000,eqPoint = 4500000)
+
+reslat,sval = Isingsimulation(TempList[4],5000,5000,TempList[40],iterations = 5000000, preeqPoint=5000,eqPoint = 5000)
 
 #plot(Results)
-println(sval)
+#println(sval)
 heatmap(reslat)
 
 
